@@ -8,8 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.greatlearning.EmployeeManagementApi.entity.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long>{
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
+	//Fetching list of Employees having Same first name
 	List<Employee> findByFirstNameContainingIgnoreCase(String fname);
 
 }
