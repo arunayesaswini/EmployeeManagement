@@ -1,5 +1,6 @@
 package com.greatlearning.EmployeeManagementApi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,6 @@ public class RoleController {
 		return roleService.addRole(rname);
 	}
 
-	
 	// updating role by Role Id
 	@PutMapping("/editById")
 	public Role updateRole(@RequestParam("id") long rid, @RequestBody Role role) {
@@ -65,4 +65,12 @@ public class RoleController {
 		return roleService.deleteRole(rname);
 	}
 
+	// Handling error Page
+	@RequestMapping("/error")
+	public String accessDenied(Principal user) {
+		if (user != null) {
+			return user.getName() + " You donot have permission to access this page";
+		} else
+			return "You donot have permission to access this page";
+	}
 }

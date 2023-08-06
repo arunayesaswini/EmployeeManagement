@@ -46,16 +46,17 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.requestMatchers("/users","/roles").hasAuthority("SUPER_ADMIN")
-		.requestMatchers("/employees").hasAuthority("ADMIN")
+		.antMatchers("/users","/roles").hasAuthority("SUPER_ADMIN")
+		.antMatchers("/employees").hasAuthority("ADMIN")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employee/list")
+		.and()
 		.logout().logoutSuccessUrl("/login").permitAll()
-        .and()
-        .exceptionHandling().accessDeniedPage("/employees/403")
-        .and()
-        .cors().and().csrf().disable();
+		.and()
+		.exceptionHandling().accessDeniedPage("/employees/error")
+		.and()
+		.cors().and().csrf().disable();
 		
 		
 		return http.build();

@@ -1,5 +1,6 @@
 package com.greatlearning.EmployeeManagementApi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +16,7 @@ import com.greatlearning.EmployeeManagementApi.entity.Employee;
 import com.greatlearning.EmployeeManagementApi.service.EmployeeService;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employees")
 public class EmployeeController {
 
 	EmployeeService empService;
@@ -62,6 +63,15 @@ public class EmployeeController {
 	public String deleteEmployeeById(@RequestParam("id") long id) {
 		return empService.deleteEmployee(id);
 
+	}
+
+	// Handling Error Page
+	@RequestMapping("/error")
+	public String accessDenied(Principal user) {
+		if (user != null) {
+			return user.getName() + " You donot have permission to access this page";
+		} else
+			return "You donot have permission to access this page";
 	}
 
 }
