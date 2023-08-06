@@ -48,6 +48,7 @@ public class SecurityConfig {
 		http.authorizeRequests()
 		.antMatchers("/users","/roles").hasAuthority("SUPER_ADMIN")
 		.antMatchers("/employees").hasAuthority("ADMIN")
+		.antMatchers("/employees/add","/employees/deleteById").hasRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employee/list")
