@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.greatlearning.EmployeeManagementApi.Security.MyUserAuthenticationDetails;
-import com.greatlearning.EmployeeManagementApi.entity.User;
+import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 import com.greatlearning.EmployeeManagementApi.repository.UserRepository;
 
 public class UserDetailsServiceImpl implements UserDetailsService{
@@ -17,10 +17,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	
-		User user=userRepository.findUserByUsername(username);
-		if(user==null)
+		MyUser myUser=userRepository.getUserByUsername(username);
+		if(myUser==null)
 			throw new UsernameNotFoundException("Could not find user");
-		return new MyUserAuthenticationDetails(user);
+		return new MyUserAuthenticationDetails(myUser);
 	}
 
 }

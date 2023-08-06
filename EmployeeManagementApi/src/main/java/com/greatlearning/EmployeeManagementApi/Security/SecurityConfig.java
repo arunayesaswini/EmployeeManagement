@@ -30,7 +30,7 @@ public class SecurityConfig {
 	
 	//This is for not encrypting the password
 	@Bean
-	private PasswordEncoder myPassword() {
+	public PasswordEncoder myPassword() {
 		
 		return NoOpPasswordEncoder.getInstance();
 	}

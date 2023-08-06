@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.greatlearning.EmployeeManagementApi.entity.User;
+import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 import com.greatlearning.EmployeeManagementApi.service.UserService;
 
 @Controller
@@ -25,34 +25,31 @@ public class UserController {
 
 	// Adding single user
 	@PostMapping("/add")
-	public User addUser(User user) {
-		if (userService.isUserNameExist(user.getUsername()) != null)
-			return userService.getUserByName(user.getUsername());
-		else
-			return userService.addUser(user);
+	public MyUser addUser(MyUser user) {
+		return userService.getUserByName(user.getUsername());
 	}
 
 	// Fetching User by Id
 	@GetMapping("/searchById")
-	public User searchUserById(@RequestParam("id") long uid) {
+	public MyUser searchUserById(@RequestParam("id") long uid) {
 		return userService.getUserById(uid);
 	}
 
 	// Fetching User by Id
 	@GetMapping("/searchByName")
-	public User searchUserByName(@RequestParam("username") String uname) {
+	public MyUser searchUserByName(@RequestParam("username") String uname) {
 		return userService.getUserByName(uname);
 	}
 
 	// Listing all Users
 	@GetMapping("/list")
-	public List<User> listAllUsers() {
+	public List<MyUser> listAllUsers() {
 		return userService.getAllUsers();
 	}
 
 	// Editing User details by Id
 	@PutMapping("/editById")
-	public User editUser(@RequestParam("id") long uid, @RequestBody User user) {
+	public MyUser editUser(@RequestParam("id") long uid, @RequestBody MyUser user) {
 		return userService.updateUser(uid, user);
 	}
 
