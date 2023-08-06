@@ -3,6 +3,7 @@ package com.greatlearning.EmployeeManagementApi.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.greatlearning.EmployeeManagementApi.entity.User;
@@ -14,20 +15,15 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 	// adding user to database
 	@Override
 	public User addUser(User user) {
 
 		return userRepository.saveAndFlush(user);
-	}
-
-	// adding multiple users to database
-	@Override
-	public String addAllUsers(List<User> users) {
-		userRepository.saveAll(users);
-		userRepository.flush();
-		return "Roles are created";
 	}
 
 	// fetching user by Id
@@ -74,6 +70,12 @@ public class UserServiceImpl implements UserService {
 		User user_delete = getUserByName(uname);
 		userRepository.delete(user_delete);
 		return "User Deleted";
+	}
+
+	@Override
+	public  String isUserNameExist(String uname) {
+		String sql="SELECT COUNT(*) FROM User WHERE username=?";
+		return jdbcTemplate.queryForObject(sql, new Object[] {uname},String.class);
 	}
 
 }

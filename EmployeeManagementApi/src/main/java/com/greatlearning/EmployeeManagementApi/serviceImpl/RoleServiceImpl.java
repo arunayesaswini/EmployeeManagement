@@ -3,6 +3,7 @@ package com.greatlearning.EmployeeManagementApi.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.greatlearning.EmployeeManagementApi.entity.Role;
@@ -17,18 +18,12 @@ public class RoleServiceImpl implements RoleService {
 
 	// Storing role in Database using saveAndFlush method
 	@Override
-	public Role addRole(Role role) {
+	public Role addRole(String rname) {
+		Role role=new Role();
+		role.setName(rname);
 		return roleRepository.saveAndFlush(role);
 	}
-
-	// Storing list of roles in Database
-	@Override
-	public String addAllRoles(List<Role> roles) {
-		roleRepository.saveAll(roles);
-		roleRepository.flush();
-		return "All Roles are created";
-	}
-
+	
 	// Fetching Role by Id
 	@Override
 	public Role getRoleById(Long rid) {
@@ -71,5 +66,8 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> getAllRoles() {
 		return roleRepository.findAll();
 	}
+
+	
+	
 
 }

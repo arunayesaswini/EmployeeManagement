@@ -10,15 +10,12 @@ import com.greatlearning.EmployeeManagementApi.entity.Role;
 public interface RoleService {
 
 	// creating a single Role
-	Role addRole(Role role);
-
-	// creating multiple Roles at a time
-	String addAllRoles(List<Role> roles);
+	Role addRole(String rname);
 
 	// fetch role by id
 	Role getRoleById(Long rid);
-
-	// fetch role by name
+	
+	//fetch role by name
 	Role getRoleByName(String rname);
 
 	// fetch all Roles in Database
@@ -32,4 +29,7 @@ public interface RoleService {
 
 	// Delete Role by Name
 	String deleteRole(String rname);
+
+	
+
 }

@@ -12,9 +12,6 @@ public interface UserService {
 	// creating a single user
 	User addUser(User user);
 
-	// creating multiple users at a time
-	String addAllUsers(List<User> users);
-
 	// fetch user by id
 	User getUserById(Long uid);
 
@@ -32,5 +29,8 @@ public interface UserService {
 
 	// Delete Role by Name
 	String deleteUser(String uname);
+	
+	//finding for duplication
+	String isUserNameExist(String uname);
 
 }

@@ -1,5 +1,6 @@
 package com.greatlearning.EmployeeManagementApi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import com.greatlearning.EmployeeManagementApi.entity.User;
 import com.greatlearning.EmployeeManagementApi.service.UserService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -25,13 +26,10 @@ public class UserController {
 	// Adding single user
 	@PostMapping("/add")
 	public User addUser(User user) {
-		return userService.addUser(user);
-	}
-
-	// Adding Multiple Users
-	@PostMapping("/addMultiple")
-	public String addMulitpleUsers(List<User> users) {
-		return userService.addAllUsers(users);
+		if (userService.isUserNameExist(user.getUsername()) != null)
+			return userService.getUserByName(user.getUsername());
+		else
+			return userService.addUser(user);
 	}
 
 	// Fetching User by Id
@@ -68,6 +66,15 @@ public class UserController {
 	@DeleteMapping("/delete")
 	public String deletUser(@RequestParam("username") String uname) {
 		return userService.deleteUser(uname);
+	}
+
+	// Handling Error Page
+	@RequestMapping("/error")
+	public String accessDenied(Principal user) {
+		if (user != null) {
+			return user.getName() + " You donot have permission to access this page";
+		} else
+			return "You donot have permission to access this page";
 	}
 
 }
