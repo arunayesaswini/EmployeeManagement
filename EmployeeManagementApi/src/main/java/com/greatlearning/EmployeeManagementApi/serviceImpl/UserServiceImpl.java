@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.greatlearning.EmployeeManagementApi.entity.User;
+import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 import com.greatlearning.EmployeeManagementApi.repository.UserRepository;
 import com.greatlearning.EmployeeManagementApi.service.UserService;
 
@@ -21,36 +21,36 @@ public class UserServiceImpl implements UserService {
 
 	// adding user to database
 	@Override
-	public User addUser(User user) {
+	public MyUser addUser(MyUser user) {
 
 		return userRepository.saveAndFlush(user);
 	}
 
 	// fetching user by Id
 	@Override
-	public User getUserById(Long uid) {
+	public MyUser getUserById(Long uid) {
 
 		return userRepository.findById(uid).get();
 	}
 
 	// fetching user by user name
 	@Override
-	public User getUserByName(String uname) {
+	public MyUser getUserByName(String uname) {
 
-		return userRepository.findUserByUsername(uname);
+		return userRepository.getUserByUsername(uname);
 	}
 
 	// fetching all users in database
 	@Override
-	public List<User> getAllUsers() {
+	public List<MyUser> getAllUsers() {
 
 		return userRepository.findAll();
 	}
 
 	// updating user using user id
 	@Override
-	public User updateUser(Long uid, User user) {
-		User user_db = getUserById(uid);
+	public MyUser updateUser(Long uid, MyUser user) {
+		MyUser user_db = getUserById(uid);
 		user_db.setUsername(user.getUsername());
 		user_db.setPassword(user.getUsername());
 
@@ -67,15 +67,8 @@ public class UserServiceImpl implements UserService {
 	// Deleting user by user name
 	@Override
 	public String deleteUser(String uname) {
-		User user_delete = getUserByName(uname);
+		MyUser user_delete = getUserByName(uname);
 		userRepository.delete(user_delete);
 		return "User Deleted";
 	}
-
-	@Override
-	public  String isUserNameExist(String uname) {
-		String sql="SELECT COUNT(*) FROM User WHERE username=?";
-		return jdbcTemplate.queryForObject(sql, new Object[] {uname},String.class);
-	}
-
 }

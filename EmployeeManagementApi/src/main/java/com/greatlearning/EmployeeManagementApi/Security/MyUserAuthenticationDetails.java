@@ -9,12 +9,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.greatlearning.EmployeeManagementApi.entity.Role;
-import com.greatlearning.EmployeeManagementApi.entity.User;
+import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 
 public class MyUserAuthenticationDetails implements UserDetails {
 
-	User user;
-	public MyUserAuthenticationDetails(User user) {
+	MyUser user;
+	public MyUserAuthenticationDetails(MyUser user) {
 		this.user=user;
 	}
 
