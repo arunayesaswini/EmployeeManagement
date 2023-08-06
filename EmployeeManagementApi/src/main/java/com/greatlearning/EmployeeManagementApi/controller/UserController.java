@@ -25,13 +25,10 @@ public class UserController {
 	// Adding single user
 	@PostMapping("/add")
 	public User addUser(User user) {
-		return userService.addUser(user);
-	}
-
-	// Adding Multiple Users
-	@PostMapping("/addMultiple")
-	public String addMulitpleUsers(List<User> users) {
-		return userService.addAllUsers(users);
+		if(userService.isUserNameExist(user.getUsername())!=null)
+			return userService.getUserByName(user.getUsername());
+		else
+			return userService.addUser(user);
 	}
 
 	// Fetching User by Id

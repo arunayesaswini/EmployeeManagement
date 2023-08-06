@@ -23,9 +23,9 @@ public class User {
 	   @Column(name = "user_id")
 	   @GeneratedValue(strategy = GenerationType.IDENTITY)
 	   private Long id;
-	
+	   @Column(unique=true,nullable=false)
 	   private String username;
-	   
+	   @Column(nullable=false)
 	   private String password;
 	    
 	   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

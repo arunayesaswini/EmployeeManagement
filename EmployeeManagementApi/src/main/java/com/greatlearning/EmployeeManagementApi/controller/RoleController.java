@@ -16,7 +16,7 @@ import com.greatlearning.EmployeeManagementApi.entity.Role;
 import com.greatlearning.EmployeeManagementApi.service.RoleService;
 
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/roles")
 public class RoleController {
 
 	@Autowired
@@ -24,16 +24,11 @@ public class RoleController {
 
 	// creating a new role
 	@PostMapping("/add")
-	public Role createRole(Role role) {
-		return roleService.addRole(role);
+	public Role createRole(@RequestParam("name") String rname) {
+		return roleService.addRole(rname);
 	}
 
-	// creating multiple roles
-	@PostMapping("/addMultiple")
-	public String addAllRoles(List<Role> roles) {
-		return roleService.addAllRoles(roles);
-	}
-
+	
 	// updating role by Role Id
 	@PutMapping("/editById")
 	public Role updateRole(@RequestParam("id") long rid, @RequestBody Role role) {
