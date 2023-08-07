@@ -23,7 +23,7 @@ public class MyUserAuthenticationDetails implements UserDetails {
 		List<Role> roles=user.getRoles();
 		List<SimpleGrantedAuthority> authorities=new ArrayList<>();
 		for(Role role:roles)
-			authorities.add(new SimpleGrantedAuthority(role.getName()));
+			authorities.add(new SimpleGrantedAuthority(role.getRolename()));
 		return authorities;
 	}
 

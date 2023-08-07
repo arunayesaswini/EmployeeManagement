@@ -42,11 +42,10 @@ public class RoleController {
 		return roleService.getRoleById(rid);
 	}
 
-	@GetMapping("/searchByName")
-	public Role getRoleByName(@RequestParam("name") String rname) {
-		return roleService.getRoleByName(rname);
-	}
-
+	/*
+	 * @GetMapping("/searchByName") public Role getRoleByName(@RequestParam("name")
+	 * String rname) { return roleService.getRoleByName(rname); }
+	 */
 	// Listing roles present in Database
 	@GetMapping("/list")
 	public List<Role> getAllRoles() {
@@ -59,11 +58,13 @@ public class RoleController {
 		return roleService.deleteRole(rid);
 	}
 
-	// Delete Role by Name
-	@DeleteMapping("/delete")
-	public String deleteRoleByName(@RequestParam("name") String rname) {
-		return roleService.deleteRole(rname);
-	}
+	/*
+	 * // Delete Role by Name
+	 * 
+	 * @DeleteMapping("/delete") public String
+	 * deleteRoleByName(@RequestParam("name") String rname) { return
+	 * roleService.deleteRole(rname); }
+	 */
 
 	// Handling error Page
 	@RequestMapping("/error")

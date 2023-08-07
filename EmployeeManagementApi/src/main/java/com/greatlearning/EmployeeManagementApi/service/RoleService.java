@@ -16,7 +16,7 @@ public interface RoleService {
 	Role getRoleById(Long rid);
 	
 	//fetch role by name
-	Role getRoleByName(String rname);
+	 Role getRoleByName(String rname); 
 
 	// fetch all Roles in Database
 	List<Role> getAllRoles();
@@ -27,8 +27,11 @@ public interface RoleService {
 	// Delete Role by Id
 	String deleteRole(Long rid);
 
-	// Delete Role by Name
+	
+	  // Delete Role by Name 
 	String deleteRole(String rname);
+	
+	 
 
 	
 

@@ -11,7 +11,7 @@ import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 public interface UserRepository extends JpaRepository<MyUser,Long>{
 	
 	//fetching a user with user name
-	@Query("SELECT u.username FROM MyUser u WHERE u.username=?1")
+	@Query("SELECT u FROM MyUser u WHERE u.username=?1")
 	public MyUser getUserByUsername(String username);
 
 }

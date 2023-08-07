@@ -54,14 +54,14 @@ public class UserController {
 	}
 
 	// Deleting User by Id
-	@DeleteMapping("/delete")
-	public String deleteUser(@RequestParam("id") long uid) {
+	@DeleteMapping("/deleteById")
+	public String deleteUserById(@RequestParam("id") long uid) {
 		return userService.deleteUser(uid);
 	}
 
 	// Delete User by Name
-	@DeleteMapping("/delete")
-	public String deletUser(@RequestParam("username") String uname) {
+	@DeleteMapping("/deleteByName")
+	public String deletUserByName(@RequestParam("username") String uname) {
 		return userService.deleteUser(uname);
 	}
 

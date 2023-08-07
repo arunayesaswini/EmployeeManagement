@@ -19,11 +19,11 @@ public class RoleServiceImpl implements RoleService {
 	// Storing role in Database using saveAndFlush method
 	@Override
 	public Role addRole(String rname) {
-		Role role=new Role();
-		role.setName(rname);
+		Role role = new Role();
+		role.setRolename(rname);
 		return roleRepository.saveAndFlush(role);
 	}
-	
+
 	// Fetching Role by Id
 	@Override
 	public Role getRoleById(Long rid) {
@@ -34,15 +34,15 @@ public class RoleServiceImpl implements RoleService {
 	// Fetching Role by Name
 	@Override
 	public Role getRoleByName(String rname) {
-
-		return roleRepository.findByName(rname);
+		
+		return roleRepository.findByRolename(rname);
 	}
 
 	// Updating Role by Id
 	@Override
 	public Role updateRole(Long rid, Role role) {
 		Role role_db = getRoleById(rid);
-		role_db.setName(role.getName());
+		role_db.setRolename(role.getRolename());
 		return roleRepository.save(role_db);
 	}
 
@@ -53,13 +53,16 @@ public class RoleServiceImpl implements RoleService {
 		return "Role deleted";
 	}
 
-	// Deleting Role by Name
-	@Override
-	public String deleteRole(String rname) {
-		Role delete_role = getRoleByName(rname);
-		roleRepository.delete(delete_role);
-		return "Role deleted";
-	}
+	
+	  // Deleting Role by Name
+	  
+	  @Override 
+	  public String deleteRole(String rname){
+		  Role role=getRoleByName(rname);
+		  roleRepository.delete(role);
+		  return "Role got Deleted";
+		  }
+	 
 
 	// Fetching all Roles in DataBase
 	@Override
@@ -67,7 +70,6 @@ public class RoleServiceImpl implements RoleService {
 		return roleRepository.findAll();
 	}
 
-	
 	
 
 }
