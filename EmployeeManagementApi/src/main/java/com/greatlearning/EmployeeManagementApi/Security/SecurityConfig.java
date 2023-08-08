@@ -48,7 +48,7 @@ public class SecurityConfig
 	{
 		http
 		.authorizeRequests()
-		.antMatchers("/users/**","/roles/**").hasAuthority("ROLE_ADMIN")
+		.antMatchers("/users/**","/roles/**").hasRole("ADMIN")
 		.antMatchers("/employees/add","/employees/delete").hasRole("ADMIN")
 		.antMatchers(
 				"/employees/list",
