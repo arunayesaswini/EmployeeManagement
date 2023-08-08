@@ -1,66 +1,67 @@
+
 package com.greatlearning.EmployeeManagementApi.Security;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.ArrayList; import java.util.Collection; 
 import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority; 
+import org.springframework.security.core.authority.SimpleGrantedAuthority; 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.greatlearning.EmployeeManagementApi.entity.Role;
+import com.greatlearning.EmployeeManagementApi.entity.Role; 
 import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 
 public class MyUserAuthenticationDetails implements UserDetails {
-	
-	MyUser user;
+
+	MyUser user; 
 	public MyUserAuthenticationDetails(MyUser user) {
-		this.user=user;
-	}
+		this.user=user; 
+		}
 
-	@Override
+	@Override 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<Role> roles=user.getRoles();
-		List<SimpleGrantedAuthority> authorities=new ArrayList<>();
-		for(Role role:roles)
-			authorities.add(new SimpleGrantedAuthority(role.getRolename()));
-		return authorities;
-	}
+		List<Role> roles=user.getRoles(); 
+		List<SimpleGrantedAuthority>
+		authorities=new ArrayList<>(); 
+		for(Role role:roles) 
+			authorities.add(new
+				SimpleGrantedAuthority(role.getRolename())); 
+		return authorities; 
+		}
 
-	@Override
+	@Override 
 	public String getPassword() {
-		
-		return user.getPassword();
-	}
+		return user.getPassword(); 
+		}
 
-	@Override
+	@Override 
 	public String getUsername() {
-		
-		return user.getUsername();
-	}
 
-	@Override
+		return user.getUsername(); 
+		}
+
+	@Override 
 	public boolean isAccountNonExpired() {
-		
-		return true;
-	}
 
-	@Override
+		return true; 
+		}
+
+	@Override 
 	public boolean isAccountNonLocked() {
-		
-		return true;
-	}
 
-	@Override
+		return true; 
+		}
+
+	@Override 
 	public boolean isCredentialsNonExpired() {
-		
-		return true;
-	}
 
-	@Override
+		return true; 
+		}
+
+	@Override 
 	public boolean isEnabled() {
-		
-		return true;
-	}
+
+		return true; 
+		}
 
 }

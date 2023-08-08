@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public MyUser addUser(MyUser user) {
 
-		return userRepository.saveAndFlush(user);
+		return userRepository.save(user);
 	}
 
 	// fetching user by Id
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public MyUser getUserByName(String uname) {
 
-		return userRepository.getUserByUsername(uname);
+		return userRepository.findByUsername(uname);
 	}
 
 	// fetching all users in database
