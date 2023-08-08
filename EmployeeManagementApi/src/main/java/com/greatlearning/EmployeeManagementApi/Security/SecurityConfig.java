@@ -1,71 +1,85 @@
 package com.greatlearning.EmployeeManagementApi.Security;
 
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import com.greatlearning.EmployeeManagementApi.serviceImpl.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig 
+{
+	@Bean
+	public DaoAuthenticationProvider myAuthProvider()
+	{
+		DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
+		provider.setUserDetailsService(myUserDetails());
+		provider.setPasswordEncoder(getPasswordEncoder());
+		return provider;
+	}
 	
-	@Autowired
-	DataSource dataSource;
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		// JDBC authentication, method chaining
-		auth.jdbcAuthentication().dataSource(dataSource).withDefaultSchema()
-				.withUser(User.withUsername("aruna").password(getPasswordEncoder().encode("aruna"))
-						.roles("SUPER_ADMIN"))
-				.withUser(
-						User.withUsername("admin").password(getPasswordEncoder().encode("admin")).roles("ADMIN"));
+	@Bean
+	public UserDetailsService myUserDetails() {
+		
+		return (new UserDetailsServiceImpl());
+	}
+	
+	@Bean
+	public PasswordEncoder getPasswordEncoder()
+	{
+		return NoOpPasswordEncoder.getInstance();
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	/*
+	 * //excluding security for H2 Console
+	 * 
+	 * @Override public void configure(WebSecurity web) throws Exception {
+	 * web.ignoring().antMatchers("/h2-console/**"); }
+	 */
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception
+	{
 		http
-		.authorizeRequests().antMatchers("/users/**","/roles/**","/employees/**").hasRole("SUPER_ADMIN")
-		.antMatchers("/employees/list").hasAnyRole("ADMIN", "SUPER_ADMIN","USER")
-		.antMatchers("/employees/add",
-				"/employees/deleteById").hasRole("ADMIN")
-		.antMatchers("/employees/editById",
+		.authorizeRequests()
+		.antMatchers("/users/**","/roles/**").hasAuthority("ROLE_ADMIN")
+		.antMatchers("/employees/add","/employees/delete").hasRole("ADMIN")
+		.antMatchers(
+				"/employees/list",
+				"/employees/editById",
 				"/employees/searchById",
 				"/employees/searchByName",
-				"/employees/sort").hasAnyRole("ADMIN", "SUPER_ADMIN","USER")		
-		.antMatchers("/").permitAll()
+				"/employees/sort"
+				).hasAnyRole("STAFF","ADMIN")
+		.antMatchers(
+				"/employees/list",
+				"/employees/searchById",
+				"/employees/searchByName",
+				"/employees/sort"
+				).hasRole("USER")
 		.and()
-		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employees/list")
+		.formLogin().loginProcessingUrl("/login").successForwardUrl("/employees/list").permitAll()
 		.and()
-		.logout()
-		.logoutSuccessUrl("/login")
-		.permitAll()
+		.logout().logoutSuccessUrl("/login").permitAll()
 		.and()
-		.exceptionHandling().accessDeniedPage("/employees/error")
+		.exceptionHandling().accessDeniedPage("/error")
 		.and()
 		.cors().and().csrf().disable();
+		
+		http.authenticationProvider(myAuthProvider());
+		
+		return http.build();	
+		
 	}
-
-//	If you don't want to encode the created password, you can write the below bean method, FYI: not recommended for Prod env
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/h2-console/**");
-
-	}
+	
+	
+	
 	
 	
 }

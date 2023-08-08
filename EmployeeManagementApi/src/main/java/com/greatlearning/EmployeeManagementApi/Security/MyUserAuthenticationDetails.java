@@ -12,7 +12,7 @@ import com.greatlearning.EmployeeManagementApi.entity.Role;
 import com.greatlearning.EmployeeManagementApi.entity.MyUser;
 
 public class MyUserAuthenticationDetails implements UserDetails {
-
+	
 	MyUser user;
 	public MyUserAuthenticationDetails(MyUser user) {
 		this.user=user;

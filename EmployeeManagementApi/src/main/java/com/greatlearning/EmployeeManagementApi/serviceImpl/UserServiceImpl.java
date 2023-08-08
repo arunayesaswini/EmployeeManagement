@@ -3,7 +3,6 @@ package com.greatlearning.EmployeeManagementApi.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.greatlearning.EmployeeManagementApi.entity.MyUser;
@@ -16,9 +15,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
-
 	// adding user to database
 	@Override
 	public MyUser addUser(MyUser user) {

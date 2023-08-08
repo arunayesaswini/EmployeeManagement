@@ -59,19 +59,12 @@ public class EmployeeController {
 	}
 
 	// Deleting an Employee using Employee Id
-	@DeleteMapping("/deleteById")
+	@DeleteMapping("/delete")
 	public String deleteEmployeeById(@RequestParam("id") long id) {
 		return empService.deleteEmployee(id);
 
 	}
 
-	// Handling Error Page
-	@RequestMapping("/error")
-	public String accessDenied(Principal user) {
-		if (user != null) {
-			return user.getName() + " You donot have permission to access this page";
-		} else
-			return "You donot have permission to access this page";
-	}
+	
 
 }
